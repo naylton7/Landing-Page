@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia de Game Design — O manual completo para estruturar seus jogos</title>
+<meta name="description" content="Um guia direto ao ponto com o ciclo completo de desenvolvimento de jogos: mecânicas, level design, balanceamento, IA de inimigos, UI/UX e QA. Em PDF, para ler quando e onde quiser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg: #0d1120;
+  --bg-soft: #10142a;
+  --panel: #161b34;
+  --panel-2: #1c2140;
+  --line: rgba(226,231,255,0.09);
+  --line-strong: rgba(226,231,255,0.18);
+  --text: #eef0fb;
+  --text-muted: #9aa2c7;
+  --text-faint: #6b7296;
+  --amber: #f5a623;
+  --amber-soft: rgba(245,166,35,0.14);
+  --mint: #59e0c2;
+  --danger: #ef6a6a;
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --maxw: 1120px;
+  --font-display: "Chakra Petch", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+img,svg{display:block;max-width:100%;}
+a{color:inherit;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+h1,h2,h3,h4{font-family:var(--font-display);margin:0;line-height:1.12;letter-spacing:0.2px;}
+p{margin:0;}
+.grid-bg{
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size:42px 42px;
+}
+::selection{background:var(--amber);color:#1a1204;}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-family:var(--font-display);font-weight:600;font-size:16px;
+  padding:16px 30px;border-radius:var(--radius-s);
+  border:none;cursor:pointer;text-decoration:none;
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  white-space:nowrap;
+}
+.btn-primary{
+  background:var(--amber);color:#241703;
+  box-shadow:0 10px 26px -8px rgba(245,166,35,0.55);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px -8px rgba(245,166,35,0.65);}
+.btn-primary:active{transform:translateY(0);}
+.btn-ghost{
+  background:transparent;color:var(--text);border:1px solid var(--line-strong);
+}
+.btn-ghost:hover{border-color:var(--amber);color:var(--amber);}
+.btn-block{width:100%;}
+.btn-lg{padding:20px 34px;font-size:18px;}
+
+/* ---------- Topbar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(13,17,32,0.86);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:700;font-size:18px;}
+.brand .mark{
+  min-width:36px;height:30px;padding:0 7px;border-radius:7px;background:var(--amber-soft);
+  border:1px solid rgba(245,166,35,0.5);display:flex;align-items:center;justify-content:center;
+  color:var(--amber);font-size:13px;font-weight:700;letter-spacing:0.5px;
+}
+.topbar nav{display:flex;align-items:center;gap:28px;}
+.topbar nav a{font-size:14px;color:var(--text-muted);text-decoration:none;}
+.topbar nav a:hover{color:var(--text);}
+.topbar .cta-slot .btn{padding:11px 20px;font-size:14px;}
+.nav-links{display:flex;gap:28px;}
+@media (max-width:820px){
+  .nav-links{display:none;}
+}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;padding:76px 0 60px;overflow:hidden;}
+.hero .grid-bg{
+  position:absolute;inset:0;z-index:0;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 0%, black 40%, transparent 90%);
+}
+.hero .wrap{position:relative;z-index:1;}
+.hero-grid{
+  display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;
+}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:44px;}
+}
+.eyebrow-row{display:flex;align-items:center;gap:10px;margin-bottom:22px;}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid rgba(245,166,35,0.4);background:var(--amber-soft);
+  color:var(--amber);font-size:13px;font-weight:600;
+  padding:7px 14px;border-radius:999px;
+}
+.pill .dot{width:6px;height:6px;border-radius:50%;background:var(--amber);}
+.hero h1{font-size:44px;font-weight:700;max-width:620px;}
+.hero h1 .accent-underline{
+  position:relative;display:inline;
+}
+.hero h1 .accent-underline::after{
+  content:"";position:absolute;left:0;right:0;bottom:2px;height:9px;
+  background:rgba(245,166,35,0.28);z-index:-1;
+}
+.hero .sub{margin-top:20px;font-size:18px;color:var(--text-muted);max-width:540px;}
+.hero .cta-row{display:flex;align-items:center;gap:18px;margin-top:32px;flex-wrap:wrap;}
+.hero .price-note{font-size:13px;color:var(--text-faint);}
+.hero .price-note strong{color:var(--text);}
+.trust-row{
+  display:flex;gap:36px;margin-top:48px;flex-wrap:wrap;
+  border-top:1px solid var(--line);padding-top:26px;
+}
+.trust-item .num{font-family:var(--font-display);font-size:26px;font-weight:700;color:var(--amber);}
+.trust-item .lbl{font-size:13px;color:var(--text-muted);margin-top:2px;}
+
+/* ---------- Cover mockup ---------- */
+.cover-stage{display:flex;justify-content:center;}
+.cover{
+  position:relative;width:100%;max-width:380px;aspect-ratio:3/4;
+  background:linear-gradient(160deg,var(--panel-2) 0%, var(--bg-soft) 100%);
+  border:1px solid var(--line-strong);border-radius:14px;
+  padding:30px 28px;display:flex;flex-direction:column;justify-content:space-between;
+  box-shadow:0 40px 80px -30px rgba(0,0,0,0.7);
+}
+.cover::before,.cover::after,
+.cover .br-tl,.cover .br-br{content:"";position:absolute;width:22px;height:22px;}
+.cover::before{top:14px;left:14px;border-top:2px solid var(--amber);border-left:2px solid var(--amber);}
+.cover::after{bottom:14px;right:14px;border-bottom:2px solid var(--amber);border-right:2px solid var(--amber);}
+.cover .kicker{font-size:12px;letter-spacing:1.5px;color:var(--mint);font-family:var(--font-display);}
+.cover .titles{margin-top:14px;}
+.cover .titles h2{font-size:34px;line-height:1.06;font-weight:700;}
+.cover .titles h2 span{display:block;color:var(--amber);}
+.cover .meta-line{display:flex;justify-content:space-between;align-items:center;margin-top:22px;font-size:12px;color:var(--text-faint);border-top:1px solid var(--line);padding-top:14px;}
+.cover .xp-bar{margin-top:16px;}
+.cover .xp-track{height:6px;border-radius:4px;background:var(--panel);overflow:hidden;border:1px solid var(--line-strong);}
+.cover .xp-fill{height:100%;width:78%;background:linear-gradient(90deg,var(--mint),var(--amber));}
+.cover .xp-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--text-faint);margin-top:6px;}
+.cover .format-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;}
+.cover .tag{font-size:11px;border:1px solid var(--line-strong);border-radius:5px;padding:5px 9px;color:var(--text-muted);}
+.cover-float{
+  position:absolute;background:var(--panel);border:1px solid var(--line-strong);
+  border-radius:10px;padding:10px 14px;font-size:12px;box-shadow:0 18px 40px -18px rgba(0,0,0,0.7);
+}
+.cover-float.f1{top:-18px;right:-22px;color:var(--mint);}
+.cover-float.f2{bottom:36px;left:-30px;color:var(--amber);}
+@media (max-width:640px){
+  .cover-float{display:none;}
+}
+
+/* ---------- Section shell ---------- */
+section{padding:88px 0;}
+.section-head{max-width:640px;margin:0 auto 48px;text-align:center;}
+.section-head h2{font-size:32px;font-weight:700;}
+.section-head p{margin-top:14px;color:var(--text-muted);font-size:16px;}
+.section-label{
+  font-family:var(--font-display);font-size:13px;color:var(--amber);font-weight:600;
+  margin-bottom:12px;display:block;
+}
+
+/* ---------- Pain section ---------- */
+.pain{background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.pain-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;}
+@media (max-width:860px){.pain-grid{grid-template-columns:1fr;}}
+.pain-card{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-m);
+  padding:26px 24px;
+}
+.pain-card .x{color:var(--danger);font-family:var(--font-display);font-size:20px;margin-bottom:12px;}
+.pain-card p{color:var(--text-muted);font-size:15px;}
+.pain-card strong{color:var(--text);}
+
+/* ---------- Parts (o que tem dentro) ---------- */
+.parts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+@media (max-width:760px){.parts-grid{grid-template-columns:1fr;}}
+.part-card{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-m);
+  padding:26px 26px 24px;position:relative;overflow:hidden;
+}
+.part-card:hover{border-color:var(--line-strong);}
+.part-head{display:flex;align-items:baseline;gap:14px;margin-bottom:12px;}
+.part-num{font-family:var(--font-display);font-size:15px;color:var(--amber);font-weight:700;letter-spacing:1px;}
+.part-head h3{font-size:19px;font-weight:600;}
+.part-card ul{margin:0;padding-left:18px;color:var(--text-muted);font-size:14.5px;}
+.part-card li{margin-bottom:6px;}
+.part-card li:last-child{margin-bottom:0;}
+
+/* ---------- Pipeline ---------- */
+.pipeline{background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;}
+.pipeline-scroll{overflow-x:auto;padding-bottom:14px;margin:0 -24px;padding-left:24px;padding-right:24px;}
+.pipeline-track{display:flex;align-items:stretch;gap:0;min-width:max-content;}
+.pipe-step{display:flex;align-items:center;}
+.pipe-node{
+  width:168px;background:var(--panel);border:1px solid var(--line-strong);border-radius:var(--radius-m);
+  padding:16px 16px;flex-shrink:0;
+}
+.pipe-node .idx{font-family:var(--font-display);font-size:12px;color:var(--mint);}
+.pipe-node h4{font-size:15px;margin-top:6px;font-weight:600;}
+.pipe-node p{font-size:12.5px;color:var(--text-faint);margin-top:6px;}
+.pipe-arrow{width:34px;display:flex;align-items:center;justify-content:center;color:var(--text-faint);flex-shrink:0;}
+.pipeline-note{text-align:center;color:var(--text-faint);font-size:13px;margin-top:18px;}
+
+/* ---------- Audience / bonus ---------- */
+.audience{display:grid;grid-template-columns:1fr 1fr;gap:48px;}
+@media (max-width:860px){.audience{grid-template-columns:1fr;}}
+.audience-single{grid-template-columns:1fr;max-width:560px;margin:0 auto;}
+.audience h3{font-size:22px;font-weight:700;margin-bottom:18px;}
+.check-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px;}
+.check-list li{display:flex;gap:12px;align-items:flex-start;color:var(--text-muted);font-size:15px;}
+.check-list .ico{
+  flex-shrink:0;width:22px;height:22px;border-radius:6px;background:rgba(89,224,194,0.14);
+  border:1px solid rgba(89,224,194,0.45);color:var(--mint);display:flex;align-items:center;justify-content:center;
+  font-size:12px;margin-top:1px;
+}
+.cross-list .ico{background:rgba(239,106,106,0.12);border-color:rgba(239,106,106,0.4);color:var(--danger);}
+
+/* ---------- Testimonials ---------- */
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+@media (max-width:900px){.testi-grid{grid-template-columns:1fr;}}
+.testi-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-m);padding:24px;}
+.stars{color:var(--amber);font-size:14px;letter-spacing:2px;margin-bottom:12px;}
+.testi-card p.quote{font-size:15px;color:var(--text);margin-bottom:18px;}
+.testi-who{display:flex;align-items:center;gap:10px;}
+.avatar{
+  width:36px;height:36px;border-radius:50%;background:var(--panel-2);border:1px solid var(--line-strong);
+  display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:13px;color:var(--amber);
+}
+.testi-who .name{font-size:14px;font-weight:600;}
+.testi-who .role{font-size:12.5px;color:var(--text-faint);}
+
+/* ---------- Pricing ---------- */
+.pricing{background:radial-gradient(ellipse 60% 80% at 50% 0%, rgba(245,166,35,0.08), transparent 70%), var(--bg);}
+.price-card{
+  max-width:640px;margin:0 auto;background:var(--panel);border:1px solid rgba(245,166,35,0.4);
+  border-radius:16px;padding:44px 40px;position:relative;
+  box-shadow:0 30px 70px -30px rgba(245,166,35,0.2);
+}
+.price-badge{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:var(--amber);color:#241703;font-family:var(--font-display);font-weight:700;
+  font-size:12.5px;padding:7px 16px;border-radius:999px;white-space:nowrap;
+}
+.price-head{text-align:center;margin-bottom:26px;}
+.price-head h3{font-size:22px;font-weight:700;}
+.price-row{display:flex;align-items:baseline;justify-content:center;gap:12px;margin-top:18px;}
+.price-old{font-size:18px;color:var(--text-faint);text-decoration:line-through;}
+.price-new{font-family:var(--font-display);font-size:52px;font-weight:700;color:var(--amber);}
+.price-new sup{font-size:22px;margin-right:2px;}
+.price-installment{text-align:center;color:var(--text-muted);font-size:14px;margin-top:6px;}
+.countdown{
+  display:flex;justify-content:center;gap:10px;margin:26px 0;
+}
+.countdown .cbox{
+  background:var(--panel-2);border:1px solid var(--line-strong);border-radius:8px;
+  padding:10px 12px;min-width:56px;text-align:center;
+}
+.countdown .cbox .n{font-family:var(--font-display);font-size:22px;font-weight:700;}
+.countdown .cbox .l{font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.5px;}
+.price-includes{margin:26px 0;display:flex;flex-direction:column;gap:10px;}
+.price-includes li{list-style:none;display:flex;gap:10px;align-items:center;font-size:14.5px;color:var(--text-muted);}
+.price-includes .ico{color:var(--mint);}
+.guarantee-row{
+  display:flex;gap:14px;align-items:center;margin-top:26px;padding-top:22px;border-top:1px solid var(--line);
+  color:var(--text-muted);font-size:13.5px;
+}
+.guarantee-row .shield{
+  flex-shrink:0;width:38px;height:38px;border-radius:50%;border:1px solid var(--line-strong);
+  display:flex;align-items:center;justify-content:center;color:var(--mint);font-size:16px;
+}
+.pay-methods{text-align:center;color:var(--text-faint);font-size:12.5px;margin-top:16px;}
+
+/* ---------- FAQ ---------- */
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px;}
+.faq-item{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-m);overflow:hidden;}
+.faq-item summary{
+  list-style:none;cursor:pointer;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;
+  font-weight:600;font-size:15.5px;
+}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary .plus{font-family:var(--font-display);color:var(--amber);font-size:20px;transition:transform .2s ease;}
+.faq-item[open] summary .plus{transform:rotate(45deg);}
+.faq-item .faq-body{padding:0 24px 22px;color:var(--text-muted);font-size:14.5px;max-width:640px;}
+
+/* ---------- Final CTA ---------- */
+.final-cta{
+  text-align:center;background:var(--bg-soft);border-top:1px solid var(--line);
+}
+.final-cta h2{font-size:32px;font-weight:700;max-width:560px;margin:0 auto;}
+.final-cta p{margin-top:14px;color:var(--text-muted);font-size:16px;}
+.final-cta .btn{margin-top:30px;}
+
+/* ---------- Footer ---------- */
+footer{padding:40px 0;border-top:1px solid var(--line);}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
+footer .fnote{font-size:12.5px;color:var(--text-faint);}
+
+/* ---------- Sticky mobile bar ---------- */
+.sticky-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;
+  background:rgba(13,17,32,0.94);backdrop-filter:blur(10px);
+  border-top:1px solid var(--line-strong);
+  padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  transform:translateY(120%);transition:transform .3s ease;
+}
+.sticky-bar.show{transform:translateY(0);}
+.sticky-bar .sb-price{font-family:var(--font-display);font-weight:700;font-size:16px;color:var(--amber);}
+.sticky-bar .sb-old{font-size:12px;color:var(--text-faint);text-decoration:line-through;margin-right:6px;}
+.sticky-bar .btn{padding:12px 22px;font-size:14px;}
+
+@media (min-width:900px){.sticky-bar{display:none;}}
+
+/* utility */
+.mono-note{font-family:var(--font-body);font-size:13px;color:var(--text-faint);text-align:center;margin-top:14px;}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand"><span class="mark">GDD</span> Guia de Game Design</div>
+    <nav class="nav-links">
+      <a href="#conteudo">Conteúdo</a>
+      <a href="#ciclo">Ciclo de vida</a>
+      <a href="#depoimentos">Depoimentos</a>
+      <a href="#faq">Dúvidas</a>
+    </nav>
+    <div class="cta-slot"><a href="#comprar" class="btn btn-primary">Quero o guia</a></div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="grid-bg"></div>
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow-row">
+            <span class="pill"><span class="dot"></span> Material em PDF · 28 páginas de conteúdo direto</span>
+          </div>
+          <h1>Estruture seus jogos com o mesmo processo usado por <span class="accent-underline">estúdios profissionais</span>.</h1>
+          <p class="sub">O Guia de Game Design condensa o ciclo completo de desenvolvimento — do protótipo ao lançamento — em um manual prático, sem enrolação, para quem quer parar de improvisar e começar a projetar.</p>
+          <div class="cta-row">
+            <a href="#comprar" class="btn btn-primary btn-lg">Garantir meu exemplar</a>
+          </div>
+          <div class="trust-row">
+            <div class="trust-item"><div class="num">8</div><div class="lbl">áreas do desenvolvimento cobertas</div></div>
+            <div class="trust-item"><div class="num">33</div><div class="lbl">capítulos organizados por tema</div></div>
+            <div class="trust-item"><div class="num">100%</div><div class="lbl">objetivo, sem enrolação</div></div>
+          </div>
+        </div>
+
+        <div class="cover-stage">
+          <div class="cover">
+            <div class="cover-float f1">✓ Direto ao ponto</div>
+            <div>
+              <span class="kicker">MANUAL PRÁTICO</span>
+              <div class="titles">
+                <h2>GUIA DE<span>GAME DESIGN</span></h2>
+              </div>
+            </div>
+            <div>
+              <div class="format-row">
+                <span class="tag">PDF</span>
+                <span class="tag">8 partes</span>
+                <span class="tag">33 capítulos</span>
+              </div>
+              <div class="xp-bar">
+                <div class="xp-track"><div class="xp-fill"></div></div>
+                <div class="xp-labels"><span>Iniciante</span><span>Profissional</span></div>
+              </div>
+              <div class="meta-line"><span>Leitura ~2h</span><span>Qualquer dispositivo</span></div>
+            </div>
+            <div class="cover-float f2">Ciclo completo dentro</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAIN -->
+  <section class="pain">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Se alguma dessas frases parece familiar, este guia foi feito pra você</h2>
+      </div>
+      <div class="pain-grid">
+        <div class="pain-card">
+          <div class="x">✕</div>
+          <p><strong>"Sempre quis aprender a criar jogos, mas não sei por onde começar."</strong> Vídeos soltos e tutoriais avulsos não ensinam o processo inteiro, só pedaços isolados.</p>
+        </div>
+        <div class="pain-card">
+          <div class="x">✕</div>
+          <p><strong>"Meu jogo tem boas ideias, mas parece bagunçado."</strong> Sem um processo claro, mecânicas se acumulam sem propósito e o jogador se perde.</p>
+        </div>
+        <div class="pain-card">
+          <div class="x">✕</div>
+          <p><strong>"Não sei se meu jogo está difícil demais ou fácil demais."</strong> Balancear na base do "achismo" gasta tempo e frustra quem testa.</p>
+        </div>
+        <div class="pain-card">
+          <div class="x">✕</div>
+          <p><strong>"Fico perdido entre tantos termos técnicos."</strong> FSM, menace gauge, macro fluxo, GDD — sem entender o vocabulário, fica difícil evoluir.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTEÚDO -->
+  <section id="conteudo">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-label">O que tem dentro</span>
+        <h2>Um guia organizado nas 8 partes que realmente importam</h2>
+        <p>Cada parte cobre uma etapa do desenvolvimento, do primeiro protótipo à manutenção do documento de design — sem depender de outros dez materiais para entender o processo inteiro.</p>
+      </div>
+      <div class="parts-grid">
+        <div class="part-card">
+          <div class="part-head"><span class="part-num">PARTE I</span><h3>Fundamentos e processo de desenvolvimento</h3></div>
+          <ul>
+            <li>O ciclo completo: pré-alpha, protótipo, alpha, beta, polimento e versão final</li>
+            <li>Os 6 elementos que definem qualquer jogo</li>
+            <li>Como prototipar rápido sem perder foco no que precisa ser testado</li>
+          </ul>
+        </div>
+        <div class="part-card">
+          <div class="part-head"><span class="part-num">PARTE II</span><h3>Design de experiência</h3></div>
+          <ul>
+            <li>O modelo OCR: objetivo, desafio e recompensa</li>
+            <li>Os 3 C's — câmera, personagem e controle</li>
+            <li>Motivação do jogador e como manter o estado de fluxo (flow)</li>
+          </ul>
+        </div>
+        <div class="part-card">
+          <div class="part-head"><span class="part-num">PARTE III</span><h3>Mecânicas e sistemas</h3></div>
+          <ul>
+            <li>Mecânicas principais x auxiliares e sistema de combate</li>
+            <li>Sistemas de controle (input) e limitações de projeto</li>
+            <li>Usabilidade, signs & feedbacks e curva de aprendizado</li>
+          </ul>
+        </div>
+        <div class="part-card">
+          <div class="part-head"><span class="part-num">PARTE IV</span><h3>Level design e progressão</h3></div>
+          <ul>
+            <li>Tutoriais que ensinam jogando, sem cansar o jogador</li>
+            <li>Inventário, power-ups, energia, pontuação e level up</li>
+            <li>Fluxogramas para mapear cenas e a lógica de navegação</li>
+          </ul>
+        </div>
+        <div class="part-card">
+          <div class="part-head"><span class="part-num">PARTE V</span><h3>Inimigos e inteligência artificial</h3></div>
+          <ul>
+            <li>Regras gerais e padrões de comportamento dos inimigos</li>
+            <li>Máquina de estados finita (FSM) aplicada a personagens</li>
+            <li>Chefes de fase, macro/micro IA e menace gauge</li>
+          </ul>
+        </div>
+        <div class="part-card">
+          <div class="part-head"><span class="part-num">PARTE VI</span><h3>Balanceamento e conteúdo</h3></div>
+          <ul>
+            <li>Balanceamento simétrico x assimétrico</li>
+            <li>Como testar balanceamento com dados reais</li>
+            <li>NPCs, diálogo, missões e narrativa sem travar a jogabilidade</li>
+          </ul>
+        </div>
+        <div class="part-card">
+          <div class="part-head"><span class="part-num">PARTE VII</span><h3>Arte, áudio e interface</h3></div>
+          <ul>
+            <li>Como a arte comunica jogabilidade e reforça a imersão</li>
+            <li>Passo a passo para construir UI/UX do zero</li>
+            <li>Música, efeitos sonoros e trilha dinâmica</li>
+          </ul>
+        </div>
+        <div class="part-card">
+          <div class="part-head"><span class="part-num">PARTE VIII</span><h3>Produção, QA e equipe</h3></div>
+          <ul>
+            <li>Como montar um plano de testes e caçar bugs com método</li>
+            <li>Habilidades interpessoais para times de desenvolvimento</li>
+            <li>Manutenção contínua do GDD (documento de design)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PIPELINE -->
+  <section class="pipeline" id="ciclo">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-label">Dentro do guia</span>
+        <h2>Veja o ciclo de desenvolvimento que você vai dominar</h2>
+        <p>Arraste para o lado — este é o fluxo completo explicado passo a passo dentro da Parte I.</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="pipeline-scroll">
+        <div class="pipeline-track" id="pipelineTrack"></div>
+      </div>
+      <p class="pipeline-note">Cada etapa vem com objetivos claros, o que testar e os erros mais comuns de cada fase.</p>
+    </div>
+  </section>
+
+  <!-- AUDIENCE + BONUS -->
+  <section>
+    <div class="wrap">
+      <div class="audience audience-single">
+        <div>
+          <h3>Este guia é pra você que:</h3>
+          <ul class="check-list">
+            <li><span class="ico">✓</span> Está criando seu primeiro jogo e quer um processo, não um monte de tentativa e erro</li>
+            <li><span class="ico">✓</span> Já manja de mecânicas soltas, mas nunca estruturou um ciclo de desenvolvimento inteiro</li>
+            <li><span class="ico">✓</span> Quer entender o vocabulário real do game design (FSM, flow, OCR, menace gauge) pra conversar com qualquer equipe</li>
+            <li><span class="ico">✓</span> Precisa de um material de consulta rápida, sem 400 páginas de teoria</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="depoimentos" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-label">Impressões de leitura</span>
+        <h2>Feito pra ser aplicado, não só lido</h2>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Finalmente entendi por que meu jogo parecia sem rumo. Aplicar o modelo OCR mudou como eu desenho cada fase."</p>
+          <div class="testi-who"><div class="avatar">RM</div><div><div class="name">R. Martins</div><div class="role">Desenvolvedor indie</div></div></div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Uso como referência rápida antes de cada reunião de design. Direto ao ponto, sem precisar ler 300 páginas."</p>
+          <div class="testi-who"><div class="avatar">JC</div><div><div class="name">J. Carvalho</div><div class="role">Estudante de game design</div></div></div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Sempre quis aprender a criar jogos, mas nunca sabia por onde começar. Esse guia finalmente me deu um caminho claro — valeu cada centavo."</p>
+          <div class="testi-who"><div class="avatar">TA</div><div><div class="name">T. Andrade</div><div class="role">Level designer</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="comprar">
+    <div class="wrap">
+      <div class="price-card">
+        <span class="price-badge">Oferta de lançamento</span>
+        <div class="price-head">
+          <h3>Guia de Game Design — acesso completo em PDF</h3>
+        </div>
+        <div class="price-row">
+          <span class="price-old">R$ 29,90</span>
+          <span class="price-new"><sup>R$</sup>15,90</span>
+        </div>
+        <p class="price-installment">promoção por tempo limitado</p>
+
+        <div class="countdown" id="countdown">
+          <div class="cbox"><div class="n" id="cd-m">00</div><div class="l">min</div></div>
+          <div class="cbox"><div class="n" id="cd-s">00</div><div class="l">seg</div></div>
+        </div>
+
+        <ul class="price-includes">
+          <li><span class="ico">✓</span> E-book completo em PDF — 8 partes, 33 capítulos</li>
+          <li><span class="ico">✓</span> Leitura em celular, tablet ou computador</li>
+          <li><span class="ico">✓</span> Acesso imediato após a confirmação do pagamento</li>
+          <li><span class="ico">✓</span> Atualizações futuras do conteúdo, sem custo extra</li>
+        </ul>
+
+        <a href="https://pay.cakto.com.br/36tbyvt_1056860" class="btn btn-primary btn-block btn-lg">Quero meu Guia de Game Design agora</a>
+
+        <div class="guarantee-row">
+          <div class="shield">🛡</div>
+          <div>Garantia de 7 dias. Se não fizer sentido pra você, devolvemos 100% do valor — sem perguntas.</div>
+        </div>
+        <p class="pay-methods">Pagamento via Pix, cartão de crédito ou boleto</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-label">Dúvidas comuns</span>
+        <h2>Perguntas frequentes</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>Em que formato eu recebo o material? <span class="plus">+</span></summary>
+          <div class="faq-body">Você recebe um arquivo em PDF, liberado para download logo após a confirmação do pagamento. Pode ler em celular, tablet, computador ou e-reader.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Preciso saber programar para aproveitar o guia? <span class="plus">+</span></summary>
+          <div class="faq-body">Não. O conteúdo é sobre processo e design de jogos — mecânicas, level design, balanceamento, IA de inimigos, UI/UX e produção — e não exige conhecimento prévio de programação.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Serve para qualquer engine (Unity, Unreal, Godot)? <span class="plus">+</span></summary>
+          <div class="faq-body">Sim. O guia trata de conceitos e processos de game design que são independentes de engine ou plataforma.</div>
+        </details>
+        <details class="faq-item">
+          <summary>E se eu não gostar do conteúdo? <span class="plus">+</span></summary>
+          <div class="faq-body">Você tem 7 dias de garantia incondicional a partir da compra. Basta solicitar o reembolso dentro desse prazo.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <div class="wrap">
+      <h2>Pare de improvisar. Comece a projetar seus jogos com processo.</h2>
+      <p>Acesso imediato em PDF · Garantia de 7 dias · R$ 15,90</p>
+      <a href="#comprar" class="btn btn-primary btn-lg">Garantir meu exemplar agora</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="brand"><span class="mark">GDD</span> Guia de Game Design</div>
+    <p class="fnote">© 2026 Guia de Game Design. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<div class="sticky-bar" id="stickyBar">
+  <div><span class="sb-old">R$ 29,90</span><span class="sb-price">R$ 15,90</span></div>
+  <a href="https://pay.cakto.com.br/36tbyvt_1056860" class="btn btn-primary">Comprar agora</a>
+</div>
+
+<script>
+// ---------- Pipeline data (ciclo de desenvolvimento real do guia) ----------
+const steps = [
+  ["01","Pré-alpha","Escopo, mecânicas centrais e planejamento dos testes"],
+  ["02","Protótipo","Valida conceitos com rapidez e clareza"],
+  ["03","Feedbacks","Registro de opiniões e avaliação de risco"],
+  ["04","Desenvolvimento","Backlog organizado em sprints semanais"],
+  ["05","Versão Alpha","Primeiros testes técnicos e triagem de bugs"],
+  ["06","Balanceamento","Ajuste da curva de dificuldade"],
+  ["07","Versão Beta","Sem novo conteúdo, foco em estabilidade"],
+  ["08","Polimento","Testes fechados com grupo reduzido"],
+  ["09","Closed Beta","Validação com público real"],
+  ["10","Release Candidate","Última verificação antes do lançamento"],
+  ["11","Versão Final","Lançamento e monitoramento contínuo"]
+];
+const track = document.getElementById('pipelineTrack');
+steps.forEach(([idx,title,desc], i)=>{
+  const step = document.createElement('div');
+  step.className='pipe-step';
+  step.innerHTML = `<div class="pipe-node"><div class="idx">ETAPA ${idx}</div><h4>${title}</h4><p>${desc}</p></div>` +
+    (i < steps.length-1 ? `<div class="pipe-arrow">&#8594;</div>` : '');
+  track.appendChild(step);
+});
+
+// ---------- Countdown ----------
+// Oferta relâmpago de 7 minutos a partir da entrada na página
+const OFFER_END = new Date();
+OFFER_END.setMinutes(OFFER_END.getMinutes() + 7);
+OFFER_END.setSeconds(OFFER_END.getSeconds() + 0);
+
+function tickCountdown(){
+  const now = new Date();
+  let diff = Math.max(0, OFFER_END - now);
+  const m = Math.floor(diff / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  const pad = n => String(n).padStart(2,'0');
+  document.getElementById('cd-m').textContent = pad(m);
+  document.getElementById('cd-s').textContent = pad(s);
+}
+tickCountdown();
+setInterval(tickCountdown, 1000);
+
+// ---------- Sticky mobile bar ----------
+const stickyBar = document.getElementById('stickyBar');
+const priceCard = document.getElementById('comprar');
+window.addEventListener('scroll', ()=>{
+  const trigger = window.innerHeight * 0.8;
+  if(window.scrollY > trigger){
+    stickyBar.classList.add('show');
+  } else {
+    stickyBar.classList.remove('show');
+  }
+});
+</script>
+</body>
+</html>
