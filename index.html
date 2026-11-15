@@ -493,6 +493,7 @@ footer .fnote{font-size:12.5px;color:var(--text-faint);}
 /* utility */
 .mono-note{font-family:var(--font-body);font-size:13px;color:var(--text-faint);text-align:center;margin-top:14px;}
 </style>
+<link rel="stylesheet" href="galeria-styles.css">
 </head>
 <body>
 
@@ -504,6 +505,7 @@ footer .fnote{font-size:12.5px;color:var(--text-faint);}
     <nav class="nav-links">
       <a href="#conteudo">Conteúdo</a>
       <a href="#ciclo">Ciclo de vida</a>
+      <a href="#amostra">Prévia do ebook</a>
       <a href="#depoimentos">Depoimentos</a>
       <a href="#faq">Dúvidas</a>
     </nav>
@@ -516,6 +518,7 @@ footer .fnote{font-size:12.5px;color:var(--text-faint);}
     <div class="wrap">
       <a href="#conteudo">Conteúdo</a>
       <a href="#ciclo">Ciclo de vida</a>
+      <a href="#amostra">Prévia do ebook</a>
       <a href="#depoimentos">Depoimentos</a>
       <a href="#faq">Dúvidas</a>
     </div>
@@ -704,6 +707,76 @@ footer .fnote{font-size:12.5px;color:var(--text-faint);}
       <p class="pipeline-note">Cada etapa vem com objetivos claros, o que testar e os erros mais comuns de cada fase.</p>
     </div>
   </section>
+
+  <!-- PRÉVIAS REAIS DO EBOOK -->
+<section class="sample-gallery" id="amostra">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-label">Prévia real do material</span>
+      <h2>Veja algumas páginas do Guia de Game Design</h2>
+      <p>Confira exemplos reais do conteúdo que você recebe em PDF. Toque ou clique em uma página para ampliar e ler melhor.</p>
+    </div>
+
+    <div class="sample-grid">
+      <button class="sample-card" type="button"
+        data-preview-src="assets/preview-pagina-05.webp"
+        data-preview-alt="Página 5 do Guia de Game Design: ciclo de desenvolvimento do jogo, pré-alpha, protótipo e validação.">
+        <span class="sample-image"><img src="assets/preview-pagina-05.webp" alt="Prévia real da página 5: ciclo de desenvolvimento do jogo" loading="lazy" decoding="async"></span>
+        <span class="sample-info">
+          <span class="sample-kicker">PARTE I · PÁGINA 05</span>
+          <strong>Ciclo de desenvolvimento</strong>
+          <span class="sample-action">Ver página ampliada <span aria-hidden="true">↗</span></span>
+        </span>
+      </button>
+
+      <button class="sample-card" type="button"
+        data-preview-src="assets/preview-pagina-08.webp"
+        data-preview-alt="Página 8 do Guia de Game Design: objetivo, desafio e recompensa, o modelo OCR e o Core Loop.">
+        <span class="sample-image"><img src="assets/preview-pagina-08.webp" alt="Prévia real da página 8: objetivo, desafio e recompensa" loading="lazy" decoding="async"></span>
+        <span class="sample-info">
+          <span class="sample-kicker">PARTE II · PÁGINA 08</span>
+          <strong>Objetivo, desafio e recompensa</strong>
+          <span class="sample-action">Ver página ampliada <span aria-hidden="true">↗</span></span>
+        </span>
+      </button>
+
+      <button class="sample-card" type="button"
+        data-preview-src="assets/preview-pagina-18.webp"
+        data-preview-alt="Página 18 do Guia de Game Design: regras dos inimigos, máquina de estados finita e inteligência artificial.">
+        <span class="sample-image"><img src="assets/preview-pagina-18.webp" alt="Prévia real da página 18: inimigos e inteligência artificial" loading="lazy" decoding="async"></span>
+        <span class="sample-info">
+          <span class="sample-kicker">PARTE V · PÁGINA 18</span>
+          <strong>Inimigos e inteligência artificial</strong>
+          <span class="sample-action">Ver página ampliada <span aria-hidden="true">↗</span></span>
+        </span>
+      </button>
+
+      <button class="sample-card" type="button"
+        data-preview-src="assets/preview-pagina-20.webp"
+        data-preview-alt="Página 20 do Guia de Game Design: balanceamento de jogos, matemática, economia e conteúdo.">
+        <span class="sample-image"><img src="assets/preview-pagina-20.webp" alt="Prévia real da página 20: balanceamento do jogo" loading="lazy" decoding="async"></span>
+        <span class="sample-info">
+          <span class="sample-kicker">PARTE VI · PÁGINA 20</span>
+          <strong>Balanceamento do jogo</strong>
+          <span class="sample-action">Ver página ampliada <span aria-hidden="true">↗</span></span>
+        </span>
+      </button>
+    </div>
+
+    <p class="sample-note">As imagens mostram páginas autênticas do PDF. O material completo é entregue digitalmente após a confirmação do pagamento.</p>
+  </div>
+</section>
+
+<dialog class="sample-lightbox" id="sampleLightbox" aria-label="Pré-visualização ampliada da página do ebook">
+  <div class="sample-lightbox__bar">
+    <span>Prévia do Guia de Game Design</span>
+    <button type="button" class="sample-lightbox__close" id="sampleLightboxClose" aria-label="Fechar prévia">×</button>
+  </div>
+  <div class="sample-lightbox__body">
+    <img id="sampleLightboxImage" src="" alt="Página ampliada do Guia de Game Design">
+  </div>
+</dialog>
+
 
   <!-- AUDIENCE + BONUS -->
   <section>
@@ -925,5 +998,6 @@ document.querySelectorAll('a[href*="pay.cakto.com.br"]').forEach(a=>{
   });
 });
 </script>
+<script src="galeria-script.js" defer></script>
 </body>
 </html>
