@@ -1077,11 +1077,8 @@ window.addEventListener('scroll', ()=>{
     stickyBar.classList.remove('show');
   }
 });
-document.querySelectorAll('a[href*="pay.cakto.com.br"]').forEach(a=>{
-  a.addEventListener('click', ()=>{
-    if(window.fbq) fbq('track','InitiateCheckout',{value:24.90,currency:'BRL'});
-  });
-});
+// InitiateCheckout is sent by Cakto when its checkout page opens.
+// Do not fire it here too, or the same checkout can be counted twice.
 </script>
 <script src="galeria-script.js" defer></script>
 </body>
