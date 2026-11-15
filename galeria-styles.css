@@ -1,0 +1,152 @@
+/* Galeria de páginas reais do Guia de Game Design */
+.sample-gallery{
+  background:var(--bg);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.sample-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:18px;
+}
+.sample-card{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  padding:0;
+  overflow:hidden;
+  text-align:left;
+  color:var(--text);
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius-m);
+  cursor:zoom-in;
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
+}
+.sample-card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(245,166,35,.55);
+  box-shadow:0 18px 34px -24px rgba(0,0,0,.8);
+}
+.sample-card:focus-visible{
+  outline:2px solid var(--amber);
+  outline-offset:4px;
+}
+.sample-image{
+  display:block;
+  overflow:hidden;
+  padding:10px;
+  background:#f4f4f2;
+  border-bottom:1px solid var(--line);
+}
+.sample-image img{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:1489/2105;
+  object-fit:contain;
+  background:#fff;
+  box-shadow:0 6px 18px rgba(0,0,0,.15);
+}
+.sample-info{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:7px;
+  padding:16px;
+}
+.sample-kicker{
+  color:var(--mint);
+  font-family:var(--font-display);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.6px;
+}
+.sample-info strong{
+  font-family:var(--font-display);
+  font-size:16px;
+  line-height:1.25;
+}
+.sample-action{
+  margin-top:4px;
+  color:var(--amber);
+  font-size:12px;
+  font-weight:600;
+}
+.sample-note{
+  max-width:760px;
+  margin:24px auto 0;
+  text-align:center;
+  color:var(--text-faint);
+  font-size:12.5px;
+}
+.sample-lightbox{
+  width:min(94vw,920px);
+  max-width:920px;
+  max-height:94vh;
+  padding:0;
+  overflow:hidden;
+  color:var(--text);
+  background:#17181b;
+  border:1px solid var(--line-strong);
+  border-radius:12px;
+  box-shadow:0 28px 90px rgba(0,0,0,.65);
+}
+.sample-lightbox::backdrop{background:rgba(0,0,0,.82);backdrop-filter:blur(5px);}
+.sample-lightbox__bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:12px 16px;
+  border-bottom:1px solid var(--line);
+  color:var(--text-muted);
+  font-size:13px;
+}
+.sample-lightbox__close{
+  display:grid;
+  place-items:center;
+  width:36px;
+  height:36px;
+  padding:0;
+  color:var(--text);
+  background:var(--panel-2);
+  border:1px solid var(--line-strong);
+  border-radius:8px;
+  font-size:24px;
+  line-height:1;
+  cursor:pointer;
+}
+.sample-lightbox__close:hover{color:var(--amber);border-color:var(--amber);}
+.sample-lightbox__body{
+  display:flex;
+  justify-content:center;
+  max-height:calc(94vh - 60px);
+  overflow:auto;
+  padding:14px;
+  background:#202126;
+}
+.sample-lightbox__body img{
+  display:block;
+  width:auto;
+  max-width:100%;
+  height:auto;
+  max-height:calc(94vh - 90px);
+  object-fit:contain;
+  background:#fff;
+}
+@media(max-width:900px){
+  .sample-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:520px){
+  .sample-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+  .sample-image{padding:6px;}
+  .sample-info{padding:11px;gap:6px;}
+  .sample-info strong{font-size:14px;}
+  .sample-kicker{font-size:9.5px;}
+  .sample-action{font-size:11px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .sample-card{transition:none;}
+  .sample-card:hover{transform:none;}
+}
