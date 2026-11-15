@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guia de Game Design — O manual completo para estruturar seus jogos</title>
 <meta name="description" content="Um guia direto ao ponto com o ciclo completo de desenvolvimento de jogos: mecânicas, level design, balanceamento, IA de inimigos, UI/UX e QA. Em PDF, para ler quando e onde quiser.">
+<meta name="theme-color" content="#17181b">
+<meta property="og:type" content="product">
+<meta property="og:title" content="Guia de Game Design — o manual completo para estruturar seus jogos">
+<meta property="og:description" content="8 partes, 33 capítulos, em PDF. De R$ 49,90 por R$ 24,90 ou 5x de R$ 5,73. No Pix, R$ 19,12 com 20% OFF. Garantia de 7 dias.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -450,11 +454,49 @@ footer .fnote{font-size:12.5px;color:var(--text-faint);}
   body{padding-bottom:calc(76px + env(safe-area-inset-bottom));}
 }
 
+/* ---------- Conversão ---------- */
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;}
+.announce{background:var(--amber);color:#241703;text-align:center;font-family:var(--font-display);font-weight:600;font-size:14px;padding:9px 16px;line-height:1.3;}
+.announce b{font-variant-numeric:tabular-nums;background:rgba(36,23,3,.12);padding:2px 8px;border-radius:5px;margin:0 4px;}
+.announce a{margin-left:8px;text-decoration:underline;text-underline-offset:3px;}
+@media (max-width:480px){.announce{font-size:12.5px;}.announce a{display:none;}}
+@keyframes pulse{0%{box-shadow:0 10px 26px -8px rgba(245,166,35,.55),0 0 0 0 rgba(245,166,35,.5);}70%{box-shadow:0 10px 26px -8px rgba(245,166,35,.55),0 0 0 14px rgba(245,166,35,0);}100%{box-shadow:0 10px 26px -8px rgba(245,166,35,.55),0 0 0 0 rgba(245,166,35,0);}}
+.btn-pulse{animation:pulse 2.4s infinite;}
+.btn-pulse:hover{animation:none;}
+.hero .price-note{font-size:14.5px;line-height:1.45;color:var(--text-muted);}
+.hero .price-note s{color:var(--text-faint);}
+.hero .price-note strong{font-family:var(--font-display);}
+.hero-assure{flex-basis:100%;list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 22px;font-size:13.5px;color:var(--text-muted);}
+.hero-assure li::before{content:"✓";color:var(--mint);margin-right:7px;font-weight:700;}
+.cover-stage{perspective:1400px;}
+.cover{transform:rotateY(-9deg) rotateX(3deg);transition:transform .5s ease;
+  box-shadow:inset 10px 0 18px -10px rgba(0,0,0,.7),inset 4px 0 0 rgba(245,166,35,.55),0 40px 80px -30px rgba(0,0,0,.75),0 0 110px -30px rgba(245,166,35,.35);}
+.cover-stage:hover .cover{transform:rotateY(-2deg) rotateX(1deg);}
+@media (max-width:640px){.cover{transform:none;}}
+.cta-mid{padding:0 0 88px;margin-top:-44px;}
+.cta-band{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;background:var(--panel);border:1px solid rgba(245,166,35,.4);border-radius:var(--radius-m);padding:24px 28px;}
+.cta-band p{font-size:17px;color:var(--text-muted);}
+.cta-band strong{color:var(--amber);font-family:var(--font-display);}
+@media (max-width:640px){.cta-mid{padding:0 0 56px;margin-top:-20px;}.cta-band{flex-direction:column;text-align:center;padding:22px 18px;}.cta-band .btn{width:100%;white-space:normal;}}
+.off-tag{background:var(--mint);color:#06241c;font-family:var(--font-display);font-weight:700;font-size:13px;padding:3px 9px;border-radius:5px;align-self:center;}
+.installment{margin:20px auto 0;max-width:400px;text-align:center;background:var(--amber-soft);border:1px solid rgba(245,166,35,.5);border-radius:var(--radius-m);padding:14px 16px;}
+.installment .inst-main{display:block;font-size:16px;color:var(--text);}
+.installment .inst-main strong{font-family:var(--font-display);font-size:26px;color:var(--amber);}
+.installment .inst-sub{display:block;font-size:13px;color:var(--text-muted);margin-top:4px;}
+.price-installment{margin-top:12px;}
+.installment .pix-line{border-top:1px dashed rgba(245,166,35,.4);margin-top:12px;padding-top:12px;font-size:15px;color:var(--text);}
+.installment .pix-line strong{font-family:var(--font-display);font-size:22px;color:var(--mint);}
+.pix-off{display:inline-block;background:var(--mint);color:#06241c;font-family:var(--font-display);font-weight:700;font-size:12px;padding:2px 8px;border-radius:5px;margin-left:8px;vertical-align:2px;}
+.sb-inst{font-size:12px;color:var(--text-muted);margin-top:1px;}
+@media (prefers-reduced-motion:reduce){.btn-pulse{animation:none;}.cover{transform:none;transition:none;}html{scroll-behavior:auto;}}
+
 /* utility */
 .mono-note{font-family:var(--font-body);font-size:13px;color:var(--text-faint);text-align:center;margin-top:14px;}
 </style>
 </head>
 <body>
+
+<div class="announce">Oferta de lançamento: 50% OFF termina em <b id="cd-top">07:00</b> <a href="#comprar">Ver oferta</a></div>
 
 <header class="topbar">
   <div class="wrap">
@@ -494,7 +536,9 @@ footer .fnote{font-size:12.5px;color:var(--text-faint);}
           <h1>Estruture seus jogos com o mesmo processo usado por <span class="accent-underline">estúdios profissionais</span>.</h1>
           <p class="sub">O Guia de Game Design condensa o ciclo completo de desenvolvimento — do protótipo ao lançamento — em um manual prático, sem enrolação, para quem quer parar de improvisar e começar a projetar.</p>
           <div class="cta-row">
-            <a href="#comprar" class="btn btn-primary btn-lg">Garantir meu exemplar</a>
+            <a href="#comprar" class="btn btn-primary btn-lg btn-pulse">Garantir meu exemplar</a>
+            <div class="price-note"><s>R$ 49,90</s> por <strong>R$ 24,90</strong><br>ou <strong>5x de R$ 5,73</strong> no cartão<br>ou <strong>R$ 19,12</strong> no Pix (20% OFF)</div>
+            <ul class="hero-assure"><li>Acesso imediato</li><li>Garantia de 7 dias</li><li>Pix, cartão ou boleto</li></ul>
           </div>
           <div class="trust-row">
             <div class="trust-item"><div class="num">8</div><div class="lbl">áreas do desenvolvimento cobertas</div></div>
@@ -635,6 +679,15 @@ footer .fnote{font-size:12.5px;color:var(--text-faint);}
     </div>
   </section>
 
+  <section class="cta-mid">
+    <div class="wrap">
+      <div class="cta-band">
+        <p>Tudo isso por <strong>R$ 24,90</strong>, em <strong>5x de R$ 5,73</strong> no cartão ou <strong>R$ 19,12</strong> no Pix</p>
+        <a href="#comprar" class="btn btn-primary">Quero o guia completo</a>
+      </div>
+    </div>
+  </section>
+
   <!-- PIPELINE -->
   <section class="pipeline" id="ciclo">
     <div class="wrap">
@@ -700,15 +753,20 @@ footer .fnote{font-size:12.5px;color:var(--text-faint);}
   <section class="pricing" id="comprar">
     <div class="wrap">
       <div class="price-card">
-        <span class="price-badge">Oferta de lançamento</span>
+        <span class="price-badge">Lançamento: 50% OFF</span>
         <div class="price-head">
           <h3>Guia de Game Design — acesso completo em PDF</h3>
         </div>
         <div class="price-row">
           <span class="price-old">R$ 49,90</span>
+          <span class="off-tag">-50%</span>
           <span class="price-new"><sup>R$</sup>24,90</span>
         </div>
-        <p class="price-installment">promoção por tempo limitado</p>
+        <div class="installment">
+          <span class="inst-main">ou <strong>5x de R$ 5,73</strong> no cartão</span>
+          <span class="inst-sub pix-line">No Pix: <strong>R$ 19,12</strong><span class="pix-off">20% OFF</span></span>
+        </div>
+        <p class="price-installment">Você economiza R$ 25,00. Promoção por tempo limitado.</p>
 
         <div class="countdown" id="countdown">
           <div class="cbox"><div class="n" id="cd-m">00</div><div class="l">min</div></div>
@@ -722,13 +780,13 @@ footer .fnote{font-size:12.5px;color:var(--text-faint);}
           <li><span class="ico">✓</span> Atualizações futuras do conteúdo, sem custo extra</li>
         </ul>
 
-        <a href="https://pay.cakto.com.br/36tbyvt_1056860" class="btn btn-primary btn-block btn-lg btn-buy-main">Quero meu Guia de Game Design agora</a>
+        <a href="https://pay.cakto.com.br/36tbyvt_1056860" class="btn btn-primary btn-block btn-lg btn-buy-main btn-pulse">Quero meu Guia de Game Design agora</a>
 
         <div class="guarantee-row">
           <div class="shield">🛡</div>
           <div>Garantia de 7 dias. Se não fizer sentido pra você, devolvemos 100% do valor — sem perguntas.</div>
         </div>
-        <p class="pay-methods">Pagamento via Pix, cartão de crédito ou boleto</p>
+        <p class="pay-methods">🔒 Pagamento seguro via Pix (20% OFF), cartão em até 5x ou boleto</p>
       </div>
     </div>
   </section>
@@ -757,6 +815,10 @@ footer .fnote{font-size:12.5px;color:var(--text-faint);}
           <summary>E se eu não gostar do conteúdo? <span class="plus">+</span></summary>
           <div class="faq-body">Você tem 7 dias de garantia incondicional a partir da compra. Basta solicitar o reembolso dentro desse prazo.</div>
         </details>
+        <details class="faq-item">
+          <summary>Posso pagar parcelado? <span class="plus">+</span></summary>
+          <div class="faq-body">Sim. No cartão de crédito você parcela em 5x de R$ 5,73. No Pix, você paga R$ 19,12 à vista, com 20% de desconto. O boleto também está disponível.</div>
+        </details>
       </div>
     </div>
   </section>
@@ -765,7 +827,7 @@ footer .fnote{font-size:12.5px;color:var(--text-faint);}
   <section class="final-cta">
     <div class="wrap">
       <h2>Pare de improvisar. Comece a projetar seus jogos com processo.</h2>
-      <p>Acesso imediato em PDF · Garantia de 7 dias · R$ 24,90</p>
+      <p>R$ 24,90 ou 5x de R$ 5,73 no cartão. No Pix, R$ 19,12 com 20% de desconto. Acesso imediato em PDF e garantia de 7 dias.</p>
       <a href="#comprar" class="btn btn-primary btn-lg">Garantir meu exemplar agora</a>
     </div>
   </section>
@@ -780,7 +842,7 @@ footer .fnote{font-size:12.5px;color:var(--text-faint);}
 </footer>
 
 <div class="sticky-bar" id="stickyBar">
-  <div><span class="sb-old">R$ 49,90</span><span class="sb-price">R$ 24,90</span></div>
+  <div><div><span class="sb-old">R$ 49,90</span><span class="sb-price">R$ 24,90</span></div><div class="sb-inst">ou 5x de R$ 5,73</div></div>
   <a href="https://pay.cakto.com.br/36tbyvt_1056860" class="btn btn-primary">Comprar agora</a>
 </div>
 
@@ -822,6 +884,8 @@ function tickCountdown(){
   const pad = n => String(n).padStart(2,'0');
   document.getElementById('cd-m').textContent = pad(m);
   document.getElementById('cd-s').textContent = pad(s);
+  const top = document.getElementById('cd-top');
+  if(top) top.textContent = pad(m) + ':' + pad(s);
 }
 tickCountdown();
 setInterval(tickCountdown, 1000);
@@ -854,6 +918,11 @@ window.addEventListener('scroll', ()=>{
   } else {
     stickyBar.classList.remove('show');
   }
+});
+document.querySelectorAll('a[href*="pay.cakto.com.br"]').forEach(a=>{
+  a.addEventListener('click', ()=>{
+    if(window.fbq) fbq('track','InitiateCheckout',{value:24.90,currency:'BRL'});
+  });
 });
 </script>
 </body>
