@@ -68,12 +68,6 @@ a{color:inherit;}
 }
 h1,h2,h3,h4{font-family:var(--font-display);margin:0;line-height:1.12;letter-spacing:0.2px;}
 p{margin:0;}
-.grid-bg{
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size:42px 42px;
-}
 ::selection{background:var(--amber);color:#1a1204;}
 
 /* ---------- Buttons ---------- */
@@ -165,10 +159,6 @@ p{margin:0;}
 .hero{position:relative;padding:76px 0 60px;overflow:hidden;}
 @media (max-width:640px){
   .hero{padding:48px 0 40px;}
-}
-.hero .grid-bg{
-  position:absolute;inset:0;z-index:0;
-  mask-image:radial-gradient(ellipse 70% 60% at 50% 0%, black 40%, transparent 90%);
 }
 .hero .wrap{position:relative;z-index:1;}
 .hero-grid{
@@ -330,6 +320,77 @@ section{padding:88px 0;}
   font-size:12px;margin-top:1px;
 }
 .cross-list .ico{background:rgba(226,104,95,0.12);border-color:rgba(226,104,95,0.4);color:var(--danger);}
+
+/* ---------- Creator / About DKlaus ---------- */
+.creator-section{
+  background:var(--bg-soft);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.creator-card{
+  max-width:900px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:190px minmax(0,1fr);
+  gap:34px;
+  align-items:center;
+  padding:34px;
+  background:linear-gradient(135deg,rgba(245,166,35,.08),transparent 48%),var(--panel);
+  border:1px solid rgba(245,166,35,.28);
+  border-radius:14px;
+}
+.creator-profile{
+  min-height:190px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  border:1px solid var(--line-strong);
+  border-radius:12px;
+  background:rgba(255,255,255,.02);
+}
+.creator-photo{
+  display:block;
+  width:100%;
+  max-width:190px;
+  aspect-ratio:1 / 1;
+  object-fit:cover;
+  object-position:center;
+  border:1px solid rgba(245,166,35,.48);
+  border-radius:12px;
+  box-shadow:0 16px 34px -20px rgba(0,0,0,.85),0 0 34px -24px rgba(245,166,35,.7);
+}
+.creator-profile-label{
+  color:var(--text-faint);
+  font-family:var(--font-display);
+  font-size:11px;font-weight:700;letter-spacing:1.4px;
+}
+.creator-copy .section-label{margin-bottom:10px;}
+.creator-copy h2{
+  font-size:clamp(25px,4vw,34px);
+  font-weight:700;
+  margin-bottom:16px;
+}
+.creator-copy h2 span{color:var(--amber);}
+.creator-copy p{
+  color:var(--text-muted);
+  font-size:15px;
+  line-height:1.75;
+  margin-top:11px;
+  max-width:650px;
+}
+.creator-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:24px;}
+.creator-actions .btn{font-size:14px;padding:13px 19px;}
+.creator-note{font-size:12px;color:var(--text-faint);}
+@media (max-width:680px){
+  .creator-card{grid-template-columns:1fr;gap:22px;padding:22px 18px;}
+  .creator-profile{min-height:150px;}
+  .creator-photo{max-width:220px;}
+  .creator-copy h2{font-size:27px;}
+  .creator-actions{align-items:stretch;}
+  .creator-actions .btn{width:100%;white-space:normal;text-align:center;}
+}
 
 /* ---------- Testimonials ---------- */
 .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
@@ -506,6 +567,7 @@ footer .fnote{font-size:12.5px;color:var(--text-faint);}
       <a href="#conteudo">Conteúdo</a>
       <a href="#ciclo">Ciclo de vida</a>
       <a href="#amostra">Prévia do ebook</a>
+      <a href="#sobre-criador">Sobre o criador</a>
       <a href="#depoimentos">Depoimentos</a>
       <a href="#faq">Dúvidas</a>
     </nav>
@@ -519,6 +581,7 @@ footer .fnote{font-size:12.5px;color:var(--text-faint);}
       <a href="#conteudo">Conteúdo</a>
       <a href="#ciclo">Ciclo de vida</a>
       <a href="#amostra">Prévia do ebook</a>
+      <a href="#sobre-criador">Sobre o criador</a>
       <a href="#depoimentos">Depoimentos</a>
       <a href="#faq">Dúvidas</a>
     </div>
@@ -529,7 +592,6 @@ footer .fnote{font-size:12.5px;color:var(--text-faint);}
 
   <!-- HERO -->
   <section class="hero">
-    <div class="grid-bg"></div>
     <div class="wrap">
       <div class="hero-grid">
         <div>
@@ -790,6 +852,29 @@ footer .fnote{font-size:12.5px;color:var(--text-faint);}
             <li><span class="ico">✓</span> Quer entender o vocabulário real do game design (FSM, flow, OCR, menace gauge) pra conversar com qualquer equipe</li>
             <li><span class="ico">✓</span> Precisa de um material de consulta rápida, sem 400 páginas de teoria</li>
           </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE O CRIADOR -->
+  <section class="creator-section" id="sobre-criador">
+    <div class="wrap">
+      <div class="creator-card">
+        <div class="creator-profile" aria-label="Foto de DKlaus, criador do Guia de Game Design">
+          <img class="creator-photo" src="assets/foto-dklaus.webp" alt="DKlaus usando headset em seu setup de desenvolvimento de jogos" loading="lazy" decoding="async">
+          <span class="creator-profile-label">DKLAUS · GAME DEV</span>
+        </div>
+        <div class="creator-copy">
+          <span class="section-label">Quem criou este guia</span>
+          <h2>Prazer, eu sou <span>DKlaus.</span></h2>
+          <p>Sou desenvolvedor independente e criador de conteúdo sobre desenvolvimento de jogos. No canal DKlaus, compartilho projetos, devlogs e experiências criando jogos, explorando ferramentas como Unreal Engine e inteligência artificial.</p>
+          <p>Criei o Guia de Game Design para reunir fundamentos importantes do desenvolvimento de jogos em um material organizado e fácil de consultar — da concepção e prototipagem às mecânicas, inteligência artificial, balanceamento, UI/UX e produção.</p>
+          <p>A ideia é ajudar você a entender melhor o processo, organizar suas ideias e usar esses conceitos como referência enquanto desenvolve seus próprios projetos.</p>
+          <div class="creator-actions">
+            <a class="btn btn-ghost" href="https://www.youtube.com/@DKlaus7?sub_confirmation=1" target="_blank" rel="noopener noreferrer">Conheça meu trabalho no YouTube ↗</a>
+            <span class="creator-note">Projetos, bastidores e jornada no Game Dev.</span>
+          </div>
         </div>
       </div>
     </div>
